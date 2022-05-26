@@ -1,7 +1,8 @@
 name: Build app ionic
+
 on: [push]
-jobs:
-  build:
+  jobs:
+    build:
       runs-on: ubuntu-latest
       strategy:
         matrix:
@@ -9,18 +10,18 @@ jobs:
       steps:
         - uses: actions/checkout@v1
 
-      - name: Cache node_modules
-        - uses: action/cache@v1
+        - name: Cache node_modules
+          uses: action/cache@v1
           with: 
             path: ~/.npm
             key: ${{runner.os}}-node-${{ hasfiles('**/package-lock.json')}}
             restore-keys: |
               ${{runner.os}}-node-
-      - name: Node ${{matrix.node-version}}
+        - name: Node ${{matrix.node-version}}
           uses: actions/setup-node@v1
           with: 
             node-version: ${{matrix.node-version}}
-      - name: npm install and run build
+        - name: npm install and run build
           run: |
             npm i
             npm run build
